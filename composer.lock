@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "18850d476d0a662d6103bb54be14f305",
+    "content-hash": "8f5ebe38f388aa7e14c780918f8cbee4",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1493,6 +1493,58 @@
                 "source": "https://github.com/drupal/core-recommended/tree/10.4.6"
             },
             "time": "2025-04-02T21:06:44+00:00"
+        },
+        {
+            "name": "drupal/creative_innovative",
+            "version": "9.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/creative_innovative.git",
+                "reference": "9.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/creative_innovative-9.1.0.zip",
+                "reference": "9.1.0",
+                "shasum": "929ad1e91be564748793efdb08ced10fd3f72e48"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-theme",
+            "extra": {
+                "drupal": {
+                    "version": "9.1.0",
+                    "datestamp": "1687410583",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ashutosh Ahirwal",
+                    "homepage": "https://www.drupal.org/user/3703509"
+                },
+                {
+                    "name": "joseph.olstad",
+                    "homepage": "https://www.drupal.org/user/1321830"
+                },
+                {
+                    "name": "zeeshan_khan",
+                    "homepage": "https://www.drupal.org/user/1805074"
+                }
+            ],
+            "description": "Creative & Innovative Fully responsive theme provide <b>Slider, Color, Footer Copyright, Arrow up Left/right Social Media Icon, Contact us Information.</b><br>Developed BY <b><a href=\"https://www.drupal.org/u/ashutosh-ahirwal\">Ashutosh Ahirwal</a></b>.",
+            "homepage": "https://www.drupal.org/project/creative_innovative",
+            "support": {
+                "source": "https://git.drupalcode.org/project/creative_innovative"
+            }
         },
         {
             "name": "drupal/ctools",
