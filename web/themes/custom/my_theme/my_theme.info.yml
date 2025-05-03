@@ -1,0 +1,7 @@
+name: 'My Theme'
+type: theme
+description: 'Thème enfant de Creative Innovative'
+core_version_requirement: ^10
+base theme: creative_innovative
+libraries:
+  - my_theme/global-styling
