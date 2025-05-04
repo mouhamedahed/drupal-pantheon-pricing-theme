@@ -1,0 +1,14 @@
+<h1>Pricing Plans</h1>
+
+<button id="pricing-toggle">Basculer Mensuel / Annuel</button>
+
+<div id="pricing-wrapper">
+    {% for node in nodes %}
+        <div class="pricing-card">
+            <h2>{{ node.title.value }}</h2>
+            <p>{{ node.body.value }}</p>
+            <p class="monthly-price">Prix mensuel : {{ node.field_price_month.value }} €</p>
+            <p class="yearly-price" style="display: none;">Prix annuel : {{ node.field_price_year.value }} €</p>
+        </div>
+    {% endfor %}
+</div>
