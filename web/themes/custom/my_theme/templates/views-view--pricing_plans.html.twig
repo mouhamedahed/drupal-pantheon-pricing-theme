@@ -1,0 +1,49 @@
+{% for row in rows %}
+    {% set plan = row['#rows'][0]._entity %}
+    <div class="plan-card {{ plan.field_is_popular.value ? 'popular' : '' }}">
+        {# Titre #}
+        <h2>{{ plan.title.value }}</h2>
+
+        {# Description #}
+        {% if plan.field_description.value %}
+            <div class="description">
+                {{ plan.field_description.value }}
+            </div>
+        {% endif %}
+
+        {# Icône #}
+        {% if plan.field_icon.entity %}
+            <img src="{{ file_url(plan.field_icon.entity.uri.value) }}"
+                 alt="{{ plan.title.value }}"
+                 class="plan-icon">
+        {% endif %}
+
+        {# Fonctionnalités
+        <div class="features">
+            {% for feature in plan.field_features %}
+                {% if feature.entity %}
+                    <div class="feature">
+                        <h3>{{ feature.entity.field_group.value }}</h3>
+                        <p><strong>{{ feature.entity.field_title.value }}</strong></p>
+                        <p>{{ feature.entity.field_description.value }}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        #}
+        {# Prix #}
+        <div class="pricing">
+            <div class="price monthly">
+                {{ plan.field_price_by_month.value }} €/mois
+            </div>
+            <div class="price yearly">
+                {{ plan.field_price_by_year.value }} €/an
+            </div>
+        </div>
+
+        {# Badge populaire #}
+        {% if plan.field_is_popular.value %}
+            <div class="popular-badge">Populaire</div>
+        {% endif %}
+    </div>
+{% endfor %}
