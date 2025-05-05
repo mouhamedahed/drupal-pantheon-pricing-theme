@@ -24,10 +24,10 @@ include __DIR__ . "/settings.pantheon.php";
  * https://www.drupal.org/project/drupal/issues/3091285
  */
 // $settings['skip_permissions_hardening'] = TRUE;
-/*$settings['config_sync_directory'] = '../config/sync';
+$settings['config_sync_directory'] = '../config/sync';
 
 $settings['hash_salt'] = 'votre_cle_secrete_unique_ici';
-$databases['default']['default'] = [
+/*$databases['default']['default'] = [
     'database' => 'pricing',
     'username' => 'root',
     'password' => '', // (vide par défaut dans XAMPP)
@@ -42,3 +42,16 @@ $local_settings = __DIR__ . "/settings.local.php";
 if (file_exists($local_settings)) {
   include $local_settings;
 }
+$databases['default']['default'] = [
+  'database' => 'pricing',
+  'username' => 'root',
+  'password' => '',
+  'prefix' => '',
+  'host' => 'localhost',
+  'port' => '3306',
+  'isolation_level' => 'READ COMMITTED',
+  'driver' => 'mysql',
+  'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
+  'autoload' => 'core/modules/mysql\\src\\Driver\\Database\\mysql\\',
+];
+$settings['hash_salt'] = 'Entr0AbxQO5KMJKUB1rTkAyOY1ax6ytDQwR1oh596bq9_wSIzkdeIVpRKb8FJ-rQILdWwnMzXQ';
