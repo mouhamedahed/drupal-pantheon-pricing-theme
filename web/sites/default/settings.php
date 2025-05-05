@@ -32,8 +32,8 @@ $settings['config_sync_directory'] = '../config/sync';
 $local_settings = __DIR__ . "/settings.local.php";
 if (file_exists($local_settings)) {
   include $local_settings;
-}/*
-$databases['default']['default'] = [
+}
+/*$databases['default']['default'] = [
   'database' => 'pricing',
   'username' => 'root',
   'password' => '',
