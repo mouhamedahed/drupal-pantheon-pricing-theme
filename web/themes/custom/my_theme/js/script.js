@@ -1,13 +1,21 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const toggleButton = document.getElementById('pricing-toggle');
-    const monthlyPrices = document.querySelectorAll('.monthly-price');
-    const yearlyPrices = document.querySelectorAll('.yearly-price');
-    let isMonthly = true;
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.toggle-price').forEach(button => {
+    button.addEventListener('click', () => {
+      const period = button.dataset.period;
 
-    toggleButton.addEventListener('click', function () {
-        isMonthly = !isMonthly;
+      // Toggle active class on buttons
+      document.querySelectorAll('.toggle-price').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      button.classList.add('active');
 
-        monthlyPrices.forEach(p => p.style.display = isMonthly ? 'block' : 'none');
-        yearlyPrices.forEach(p => p.style.display = isMonthly ? 'none' : 'block');
+      // Toggle pricing display
+      document.querySelectorAll('.monthly').forEach(el => {
+        el.style.display = (period === 'monthly') ? 'block' : 'none';
+      });
+      document.querySelectorAll('.yearly').forEach(el => {
+        el.style.display = (period === 'yearly') ? 'block' : 'none';
+      });
     });
+  });
 });
