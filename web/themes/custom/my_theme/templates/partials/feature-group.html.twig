@@ -1,0 +1,22 @@
+{# my_theme/templates/partials/feature-group.html.twig #}
+{% if features is not empty %}
+    <div class="feature-group">
+        {% if group_name %}
+            <h3 class="group-title">{{ group_name }}</h3>
+        {% endif %}
+
+        <ul class="feature-list">
+            {% for feature in features %}
+                <li class="feature-item">
+                    {% if feature.field_title.value %}
+                        <strong>{{ feature.field_title.value }}</strong>
+                    {% endif %}
+
+                    {% if feature.field_description.value %}
+                        <p>{{ feature.field_description.value }}</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

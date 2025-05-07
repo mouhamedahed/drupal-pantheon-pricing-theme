@@ -1,6 +1,10 @@
 <div class="price-toggle">
-    <button class="toggle-price active" data-period="monthly" aria-pressed="true">Mensuel</button>
-    <button class="toggle-price" data-period="yearly" aria-pressed="false">Annuel</button>
+    <button class="toggle-price active" data-period="monthly"
+            aria-pressed="true">Mensuel
+    </button>
+    <button class="toggle-price" data-period="yearly" aria-pressed="false">
+        Annuel
+    </button>
 </div>
 
 {% for row in rows %}
@@ -21,25 +25,33 @@
                      class="plan-icon">
             {% endif %}
 
-            {# Fonctionnalités
             <div class="features">
                 {% for feature in plan.field_features %}
-                    {% if feature.entity %}
-                        <div class="feature">
-                            <h3>{{ feature.entity.field_group.value }}</h3>
-                            <p><strong>{{ feature.entity.field_title.value }}</strong></p>
-                            <p>{{ feature.entity.field_description.value }}</p>
-                        </div>
-                    {% endif %}
+                    <div class="feature">
+                        <h3>{{ feature.entity.field_group.entity.name.value }}</h3>
+                        <p>
+                            <strong>{{ feature.entity.field_title.value }}</strong>
+                        </p>
+                        <p>{{ feature.entity.field_description.value }}</p>
+                    </div>
                 {% endfor %}
-            </div> #}
+            </div>
+
 
             <div class="pricing">
-                <div class="price  monthly">
-                    {{ plan.field_price_by_month.value }} €/mois
+                <div class="price monthly">
+                    {% if plan.field_price_by_month.value == 0 %}
+                        Gratuit
+                    {% else %}
+                        {{ plan.field_price_by_month.value }} €/mois
+                    {% endif %}
                 </div>
                 <div class="price yearly hidden">
-                    {{ plan.field_price_by_year.value }} €/an
+                    {% if plan.field_price_by_year.value == 0 %}
+                        Gratuit
+                    {% else %}
+                        {{ plan.field_price_by_year.value }} €/an
+                    {% endif %}
                 </div>
             </div>
 
