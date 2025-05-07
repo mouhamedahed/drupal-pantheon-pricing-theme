@@ -1,26 +1,30 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const buttons = document.querySelectorAll(".toggle-price");
-  const monthlyPrices = document.querySelectorAll(".price.monthly");
-  const yearlyPrices = document.querySelectorAll(".price.yearly");
-
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      buttons.forEach(b => {
-        b.classList.remove("active");
-        b.setAttribute("aria-pressed", "false");
+document.addEventListener('DOMContentLoaded', function() {
+  // Price Toggle
+  document.querySelectorAll('.toggle-price').forEach(button => {
+    button.addEventListener('click', function() {
+      document.querySelectorAll('.toggle-price').forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-pressed', 'false');
       });
-      btn.classList.add("active");
-      btn.setAttribute("aria-pressed", "true");
 
-      const selected = btn.dataset.period;
+      this.classList.add('active');
+      this.setAttribute('aria-pressed', 'true');
 
-      if (selected === "monthly") {
-        monthlyPrices.forEach(el => el.classList.remove("hidden"));
-        yearlyPrices.forEach(el => el.classList.add("hidden"));
-      } else {
-        yearlyPrices.forEach(el => el.classList.remove("hidden"));
-        monthlyPrices.forEach(el => el.classList.add("hidden"));
-      }
+      const period = this.dataset.period;
+      document.querySelectorAll('.price.monthly').forEach(el => {
+        el.classList.toggle('hidden', period !== 'monthly');
+      });
+      document.querySelectorAll('.price.yearly').forEach(el => {
+        el.classList.toggle('hidden', period !== 'yearly');
+      });
+    });
+  });
+
+  // FAQ Accordion
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
     });
   });
 });

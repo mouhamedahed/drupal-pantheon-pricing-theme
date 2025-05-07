@@ -1,0 +1,11 @@
+<?php
+
+function my_theme_preprocess_node(&$variables) {
+  if ($variables['node']->getType() == 'plan') {
+    $terms = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->loadByProperties(['vid' => 'feature_groups']);
+
+    $variables['feature_groups'] = $terms;
+  }
+}

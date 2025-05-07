@@ -1,4 +1,4 @@
-<div class="price-toggle">
+{#<div class="price-toggle">
     <button class="toggle-price active" data-period="monthly"
             aria-pressed="true">Mensuel
     </button>
@@ -61,3 +61,154 @@
         </div>
     {% endfor %}
 {% endfor %}
+  #}
+{# Template for pricing page #}
+<div class="pricing-page">
+    {# Price Toggle Switch #}
+    <div class="price-toggle">
+        <button class="toggle-price active" data-period="monthly" aria-pressed="true">Mensuel</button>
+        <button class="toggle-price" data-period="yearly" aria-pressed="false">Annuel</button>
+    </div>
+
+    {# Plans Listing #}
+    <div class="plans-grid">
+        {% for row in rows %}
+            {% for plan_wrapper in row['#rows'] %}
+                {% set plan = plan_wrapper._entity %}
+                <div class="plan-card {{ plan.field_is_popular.value ? 'popular' : '' }}">
+                    {% if plan.field_is_popular.value %}
+                        <div class="popular-badge">Populaire</div>
+                    {% endif %}
+
+                    <h2>{{ plan.title.value }}</h2>
+
+                    {% if plan.field_description.value %}
+                        <div class="description">{{ plan.field_description.value }}</div>
+                    {% endif %}
+
+                    {% if plan.field_icon.entity %}
+                        <img src="{{ file_url(plan.field_icon.entity.uri.value) }}"
+                             alt="{{ plan.title.value }}"
+                             class="plan-icon">
+                    {% endif %}
+
+                    <div class="features">
+                        {% for feature in plan.field_features %}
+                            <div class="feature">
+                                <h3>{{ feature.entity.field_group.entity.name.value }}</h3>
+                                <p><strong>{{ feature.entity.field_title.value }}</strong></p>
+                                <p>{{ feature.entity.field_description.value }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="pricing">
+                        <div class="price monthly">
+                            {% if plan.field_price_by_month.value == 0 %}
+                                Gratuit
+                            {% elseif plan.field_price_by_month.value is empty %}
+                                Custom
+                            {% else %}
+                                {{ plan.field_price_by_month.value }} €/mois
+                            {% endif %}
+                        </div>
+                        <div class="price yearly hidden">
+                            {% if plan.field_price_by_year.value == 0 %}
+                                Gratuit
+                            {% elseif plan.field_price_by_year.value is empty %}
+                                Custom
+                            {% else %}
+                                {{ plan.field_price_by_year.value }} €/an
+                            {% endif %}
+                        </div>
+                    </div>
+
+                      <a href="{{ path('entity.node.canonical', {'node': plan.id}) }}"
+                       class="get-started">
+                        Get Started
+                    </a>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    {# Features Comparison Table  #}
+    <div class="features-comparison">
+        <h2>Comparatif des plans</h2>
+        <div class="comparison-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>Fonctionnalité</th>
+                    {% for row in rows %}
+                        {% for plan_wrapper in row['#rows'] %}
+                            {% set plan = plan_wrapper._entity %}
+                            <th>{{ plan.title.value }}</th>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+           {#
+                {% for group in taxonomy_terms('feature_groups') %}
+                    <tr class="group-header">
+                        <td colspan="{{ rows|length + 1 }}">{{ group.name.value }}</td>
+                    </tr>
+
+                    {% for feature in get_features_by_group(group.id) %}
+                        <tr>
+                            <td>{{ feature.field_title.value }}</td>
+                            {% for row in rows %}
+                                {% for plan_wrapper in row['#rows'] %}
+                                    {% set plan = plan_wrapper._entity %}
+                                    <td>
+                                        {% if feature_in_plan(feature.id, plan.id) %}
+                                            <span class="feature-check">✓</span>
+                                        {% else %}
+                                            <span class="feature-missing">✗</span>
+                                        {% endif %}
+                                    </td>
+                                {% endfor %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                #}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {# Clients Section
+    <div class="clients-section">
+        <h2>Ils nous font confiance</h2>
+        <div class="clients-grid">
+            {% for client in drupal_view('clients', 'block_1') %}
+                <a href="{{ client.url }}" target="_blank" rel="noopener noreferrer">
+                    <img src="{{ file_url(client.logo.uri) }}"
+                         alt="{{ client.name }}"
+                         loading="lazy">
+                </a>
+            {% endfor %}
+        </div>
+    </div> #}
+
+    {# FAQ Section
+    <div class="faq-section">
+        <h2>Questions fréquentes</h2>
+        <div class="faq-accordion">
+            {% for faq in drupal_view('faq', 'block_1') %}
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        {{ faq.question }}
+                        <span class="accordion-icon"></span>
+                    </button>
+                    <div class="faq-answer">
+                        {{ faq.response|raw }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    #}
+</div>
