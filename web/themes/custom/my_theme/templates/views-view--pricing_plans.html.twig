@@ -136,7 +136,7 @@
         {% endfor %}
     </div>
 
-    {# Features Comparison Table  #}
+    {# Features Comparison Table #}
     <div class="features-comparison">
         <h2>Comparatif des plans</h2>
         <div class="comparison-table">
@@ -153,20 +153,66 @@
                 </tr>
                 </thead>
                 <tbody>
-           {#
-                {% for group in taxonomy_terms('feature_groups') %}
+                {# Première passe pour collecter tous les groupes uniques #}
+                {% set all_groups = [] %}
+                {% for row in rows %}
+                    {% for plan_wrapper in row['#rows'] %}
+                        {% set plan = plan_wrapper._entity %}
+                        {% for feature in plan.field_features %}
+                            {% set group_name = feature.entity.field_group.entity.name.value %}
+                            {% if group_name not in all_groups %}
+                                {% set all_groups = all_groups|merge([group_name]) %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+
+                {# Deuxième passe pour afficher par groupe #}
+                {% for group in all_groups %}
                     <tr class="group-header">
-                        <td colspan="{{ rows|length + 1 }}">{{ group.name.value }}</td>
+                        <td colspan="{{ rows|length + 1 }}">{{ group }}</td>
                     </tr>
 
-                    {% for feature in get_features_by_group(group.id) %}
+                    {# Collecter toutes les features de ce groupe #}
+                    {% set group_features = [] %}
+                    {% for row in rows %}
+                        {% for plan_wrapper in row['#rows'] %}
+                            {% set plan = plan_wrapper._entity %}
+                            {% for feature in plan.field_features %}
+                                {% if feature.entity.field_group.entity.name.value == group %}
+                                    {% set feature_id = feature.entity.field_title.value %}
+                                    {% if feature_id not in group_features %}
+                                        {% set group_features = group_features|merge([{
+                                            'id': feature.entity.id(),
+                                            'title': feature.entity.field_title.value,
+                                            'description': feature.entity.field_description.value
+                                        }]) %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+
+                    {# Afficher chaque feature du groupe #}
+                    {% for feature in group_features %}
                         <tr>
-                            <td>{{ feature.field_title.value }}</td>
+                            <td>
+                                <strong>{{ feature.title }}</strong>
+                                <div class="feature-description">{{ feature.description }}</div>
+                            </td>
                             {% for row in rows %}
                                 {% for plan_wrapper in row['#rows'] %}
                                     {% set plan = plan_wrapper._entity %}
                                     <td>
-                                        {% if feature_in_plan(feature.id, plan.id) %}
+                                        {% set has_feature = false %}
+                                        {% for plan_feature in plan.field_features %}
+                                            {% if plan_feature.entity.field_title.value == feature.title
+                                                and plan_feature.entity.field_group.entity.name.value == group %}
+                                                {% set has_feature = true %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if has_feature %}
                                             <span class="feature-check">✓</span>
                                         {% else %}
                                             <span class="feature-missing">✗</span>
@@ -177,7 +223,6 @@
                         </tr>
                     {% endfor %}
                 {% endfor %}
-                #}
                 </tbody>
             </table>
         </div>

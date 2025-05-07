@@ -338,3 +338,41 @@ th {
   background-color: #cce5ff;
   color: #004085;
 }
+
+.comparison-table {
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+.comparison-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 1rem;
+  border: 1px solid #eee;
+  text-align: left;
+}
+
+.group-header td {
+  background-color: #f5f7fa;
+  font-weight: bold;
+  color: #4a6cf7;
+}
+
+.feature-check {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.feature-missing {
+  color: #dc3545;
+}
+
+.feature-description {
+  font-size: 0.8em;
+  color: #666;
+  margin-top: 0.5rem;
+}
