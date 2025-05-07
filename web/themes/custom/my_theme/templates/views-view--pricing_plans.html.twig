@@ -83,8 +83,9 @@
                     <h2>{{ plan.title.value }}</h2>
 
                     {% if plan.field_description.value %}
-                        <div class="description">{{ plan.field_description.value }}</div>
+                        <div class="description">{{ plan.field_description.value|striptags }}</div>
                     {% endif %}
+
 
                     {% if plan.field_icon.entity %}
                         <img src="{{ file_url(plan.field_icon.entity.uri.value) }}"
@@ -103,27 +104,29 @@
                     </div>
 
                     <div class="pricing">
-                        <div class="price monthly">
+                        <div class="price-box monthly">
                             {% if plan.field_price_by_month.value == 0 %}
-                                Gratuit
+                                <span class="price-label free">Gratuit</span>
                             {% elseif plan.field_price_by_month.value is empty %}
-                                Custom
+                                <span class="price-label custom">Custom</span>
                             {% else %}
-                                {{ plan.field_price_by_month.value }} €/mois
+                                <span class="price-label standard">{{ plan.field_price_by_month.value }} €/mois</span>
                             {% endif %}
                         </div>
-                        <div class="price yearly hidden">
+
+                        <div class="price-box yearly hidden">
                             {% if plan.field_price_by_year.value == 0 %}
-                                Gratuit
+                                <span class="price-label free">Gratuit</span>
                             {% elseif plan.field_price_by_year.value is empty %}
-                                Custom
+                                <span class="price-label custom">Custom</span>
                             {% else %}
-                                {{ plan.field_price_by_year.value }} €/an
+                                <span class="price-label standard">{{ plan.field_price_by_year.value }} €/an</span>
                             {% endif %}
                         </div>
                     </div>
 
-                      <a href="{{ path('entity.node.canonical', {'node': plan.id}) }}"
+
+                    <a href="{{ path('entity.node.canonical', {'node': plan.id}) }}"
                        class="get-started">
                         Get Started
                     </a>
