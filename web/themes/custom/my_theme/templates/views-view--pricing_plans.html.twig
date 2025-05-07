@@ -1,5 +1,7 @@
-<button class="toggle-price active" data-period="monthly">Mensuel</button>
-<button class="toggle-price" data-period="yearly">Annuel</button>
+<div class="price-toggle">
+    <button class="toggle-price active" data-period="monthly" aria-pressed="true">Mensuel</button>
+    <button class="toggle-price" data-period="yearly" aria-pressed="false">Annuel</button>
+</div>
 
 {% for row in rows %}
     {% for plan_wrapper in row['#rows'] %}
@@ -33,10 +35,10 @@
             </div> #}
 
             <div class="pricing">
-                <div class="monthly">
+                <div class="price  monthly">
                     {{ plan.field_price_by_month.value }} €/mois
                 </div>
-                <div class="yearly">
+                <div class="price yearly hidden">
                     {{ plan.field_price_by_year.value }} €/an
                 </div>
             </div>

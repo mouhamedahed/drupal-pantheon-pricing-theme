@@ -23,11 +23,34 @@
   padding: 10px;
   margin: 5px 0;
 }
+.hidden {
+  display: none;
+}
 
 .pricing {
   font-size: 1.2em;
   margin-top: 10px;
 }
-.yearly {
-  display: none;
+.price-toggle {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.toggle-price {
+  padding: 10px 20px;
+  border: 1px solid #007BFF;
+  background-color: white;
+  color: #007BFF;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-price.active,
+.toggle-price:hover {
+  background-color: #007BFF;
+  color: white;
 }
