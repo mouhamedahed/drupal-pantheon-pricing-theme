@@ -190,23 +190,25 @@
 
 
 
-
-    {# FAQ Section
-    <div class="faq-section">
-        <h2>Questions fréquentes</h2>
-        <div class="faq-accordion">
-            {% for faq in drupal_view('faq', 'block_1') %}
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        {{ faq.question }}
-                        <span class="accordion-icon"></span>
-                    </button>
-                    <div class="faq-answer">
-                        {{ faq.response|raw }}
+    {# FAQ Section  #}
+    {% if faqs is not empty %}
+        <section class="faq-section">
+            <h2 class="faq-title">Questions fréquentes</h2>
+            <div class="faq-accordion">
+                {% for faq in faqs %}
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            {{ faq.field_question.value }}
+                            <span class="accordion-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            {{ faq.field_response.value }}
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-    #}
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
+
 </div>

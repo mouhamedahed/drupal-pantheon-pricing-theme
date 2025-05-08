@@ -25,6 +25,11 @@ document.addEventListener('DOMContentLoaded', function() {
     button.addEventListener('click', function() {
       const expanded = this.getAttribute('aria-expanded') === 'true';
       this.setAttribute('aria-expanded', !expanded);
+
+      const answer = this.nextElementSibling;
+      if (answer && answer.classList.contains('faq-answer')) {
+        answer.classList.toggle('active');
+      }
     });
   });
 });

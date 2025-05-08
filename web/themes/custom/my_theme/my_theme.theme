@@ -20,19 +20,22 @@ function my_theme_preprocess_views_view(array &$variables) {
   $view = $variables['view'];
 
   if ($view->id() == 'pricing_plans') {
-    // Charger les clients publiés
+    // === Clients ===
     $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-    $query = $node_storage->getQuery()
+    $client_query = $node_storage->getQuery()
       ->condition('type', 'client')
       ->condition('status', 1)
       ->accessCheck(TRUE);
-    $client_ids = $query->execute();
+    $client_ids = $client_query->execute();
+    $variables['clients'] = !empty($client_ids) ? $node_storage->loadMultiple($client_ids) : [];
 
-    if (!empty($client_ids)) {
-      $variables['clients'] = $node_storage->loadMultiple($client_ids);
-    } else {
-      $variables['clients'] = [];
-    }
+    // === FAQ ===
+    $faq_query = $node_storage->getQuery()
+      ->condition('type', 'question_faq')
+      ->condition('status', 1)
+      ->accessCheck(TRUE);
+    $faq_ids = $faq_query->execute();
+    $variables['faqs'] = !empty($faq_ids) ? $node_storage->loadMultiple($faq_ids) : [];
   }
 }
 
