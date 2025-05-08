@@ -1,9 +1,28 @@
+
 <div class="pricing-page">
-    {# Price Toggle Switch #}
-    <div class="price-toggle">
-        <button class="toggle-price active" data-period="monthly" aria-pressed="true">Mensuel</button>
-        <button class="toggle-price" data-period="yearly" aria-pressed="false">Annuel</button>
-    </div>
+    {# Header Section #}
+    <header class="pricing-header">
+        <div class="container">
+            <h1>{{ header_data.title }}</h1>
+            <p class="header-description">{{ header_data.description }}</p>
+
+            <div class="price-toggle">
+                <button class="toggle-price active"
+                        data-period="monthly"
+                        aria-pressed="true">
+                    {{ header_data.toggle_buttons.monthly }}
+                </button>
+                <button class="toggle-price"
+                        data-period="yearly"
+                        aria-pressed="false">
+                    {{ header_data.toggle_buttons.yearly }}
+                </button>
+            </div>
+        </div>
+    </header>
+
+<div class="pricing-page">
+
 
     {# Plans Listing #}
     <div class="plans-grid">
@@ -212,9 +231,11 @@
 
 
 </div>
+</div>
 <footer class="site-footer">
     <div class="newsletter-footer">
         {{ webform_rendered }}
     </div>
 </footer>
+
 

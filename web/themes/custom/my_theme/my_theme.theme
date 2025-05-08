@@ -16,7 +16,7 @@ use Drupal\views\ViewExecutable;
 /**
  * Implémentation de hook_preprocess_views_view().
  */
-function my_theme_preprocess_views_view(array &$variables) {
+/*function my_theme_preprocess_views_view(array &$variables) {
   $view = $variables['view'];
 
   if ($view->id() == 'pricing_plans') {
@@ -44,8 +44,47 @@ function my_theme_preprocess_views_view(array &$variables) {
         ->view($webform);
     }
   }
+}*/
+
+function my_theme_preprocess_views_view(array &$variables) {
+  $view = $variables['view'];
+
+  if ($view->id() == 'pricing_plans') {
+    // === Header Data ===
+    $variables['header_data'] = [
+      'title' => t('Choisissez votre formule'),
+      'description' => t('Sélectionnez le plan qui correspond à vos besoins'),
+      'toggle_buttons' => [
+        'monthly' => t('Mensuel'),
+        'yearly' => t('Annuel'),
+      ],
+    ];
+
+    // === Clients ===
+    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+    $client_query = $node_storage->getQuery()
+      ->condition('type', 'client')
+      ->condition('status', 1)
+      ->accessCheck(TRUE);
+    $client_ids = $client_query->execute();
+    $variables['clients'] = !empty($client_ids) ? $node_storage->loadMultiple($client_ids) : [];
+
+    // === FAQ ===
+    $faq_query = $node_storage->getQuery()
+      ->condition('type', 'question_faq')
+      ->condition('status', 1)
+      ->accessCheck(TRUE);
+    $faq_ids = $faq_query->execute();
+    $variables['faqs'] = !empty($faq_ids) ? $node_storage->loadMultiple($faq_ids) : [];
+
+    // === Webform ===
+    $webform = \Drupal\webform\Entity\Webform::load('inscription_a_la_newslette');
+    if ($webform) {
+      $variables['webform_rendered'] = \Drupal::entityTypeManager()
+        ->getViewBuilder('webform')
+        ->view($webform);
+    }
+  }
 }
-
-
 
 
