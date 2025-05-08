@@ -1,68 +1,3 @@
-{#<div class="price-toggle">
-    <button class="toggle-price active" data-period="monthly"
-            aria-pressed="true">Mensuel
-    </button>
-    <button class="toggle-price" data-period="yearly" aria-pressed="false">
-        Annuel
-    </button>
-</div>
-
-{% for row in rows %}
-    {% for plan_wrapper in row['#rows'] %}
-        {% set plan = plan_wrapper._entity %}
-        <div class="plan-card {{ plan.field_is_popular.value ? 'popular' : '' }}">
-            <h2>{{ plan.title.value }}</h2>
-
-            {% if plan.field_description.value %}
-                <div class="description">
-                    {{ plan.field_description.value }}
-                </div>
-            {% endif %}
-
-            {% if plan.field_icon.entity %}
-                <img src="{{ file_url(plan.field_icon.entity.uri.value) }}"
-                     alt="{{ plan.title.value }}"
-                     class="plan-icon">
-            {% endif %}
-
-            <div class="features">
-                {% for feature in plan.field_features %}
-                    <div class="feature">
-                        <h3>{{ feature.entity.field_group.entity.name.value }}</h3>
-                        <p>
-                            <strong>{{ feature.entity.field_title.value }}</strong>
-                        </p>
-                        <p>{{ feature.entity.field_description.value }}</p>
-                    </div>
-                {% endfor %}
-            </div>
-
-
-            <div class="pricing">
-                <div class="price monthly">
-                    {% if plan.field_price_by_month.value == 0 %}
-                        Gratuit
-                    {% else %}
-                        {{ plan.field_price_by_month.value }} €/mois
-                    {% endif %}
-                </div>
-                <div class="price yearly hidden">
-                    {% if plan.field_price_by_year.value == 0 %}
-                        Gratuit
-                    {% else %}
-                        {{ plan.field_price_by_year.value }} €/an
-                    {% endif %}
-                </div>
-            </div>
-
-            {% if plan.field_is_popular.value %}
-                <div class="popular-badge">Populaire</div>
-            {% endif %}
-        </div>
-    {% endfor %}
-{% endfor %}
-  #}
-{# Template for pricing page #}
 <div class="pricing-page">
     {# Price Toggle Switch #}
     <div class="price-toggle">
@@ -229,29 +164,30 @@
     </div>
     {# Clients Section#}
     {# Méthode recommandée avec Twig Tweak #}
-    <p> Variable clients : {{ clients is defined ? 'OK' : 'NON DÉFINIE' }}</p>
 
     {% if clients is not empty %}
-        <div class="clients-section">
-            <h2>Ils nous font confiance</h2>
+        <section class="clients-section">
+            <h2 class="clients-title">Ils nous font confiance</h2>
             <div class="clients-grid">
                 {% for client in clients %}
                     <div class="client-item">
-                        <h3>{{ client.title.value }}</h3>
-                        {% if client.field_logo %}
+                        {% if client.field_logo is not empty %}
                             <img src="{{ file_url(client.field_logo.0.entity.uri.value) }}"
-                                 alt="{{ client.field_logo.0.alt }}"
+                                 alt="{{ client.field_logo.0.alt|default(client.title.value) }}"
+                                 class="client-logo"
                                  loading="lazy">
                         {% endif %}
+                        <p class="client-name">{{ client.title.value }}</p>
                     </div>
                 {% endfor %}
             </div>
-        </div>
+        </section>
     {% else %}
         <div class="no-clients">
             <p>Aucun client à afficher actuellement</p>
         </div>
     {% endif %}
+
 
 
 

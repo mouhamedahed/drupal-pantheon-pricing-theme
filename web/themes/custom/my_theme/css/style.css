@@ -377,17 +377,53 @@ th {
   margin-top: 0.5rem;
 }
 
+.clients-section {
+  background-color: #f9fafb;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.clients-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
 .clients-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.5rem;
   align-items: center;
+  justify-items: center;
 }
-.clients-grid img {
+
+.client-item {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.client-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.client-logo {
   max-height: 80px;
   filter: grayscale(100%);
-  transition: all 0.3s;
+  transition: filter 0.3s;
+  margin-bottom: 0.5rem;
 }
-.clients-grid img:hover {
-  filter: grayscale(0);
+
+.client-logo:hover {
+  filter: grayscale(0%);
+}
+
+.client-name {
+  font-size: 0.95rem;
+  color: #555;
 }

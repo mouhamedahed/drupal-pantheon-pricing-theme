@@ -11,38 +11,31 @@ function my_theme_preprocess_node(&$variables) {
   }
 }
 
-/**
- * Implémentation de hook_theme_suggestions_HOOK_alter() pour ajouter des variables à Twig.
- */
-/**
- * Implémentation du hook_theme().
- */
-function my_theme_preprocess_page(array &$variables) {
-  // 1. Initialisation du logger avec le canal 'my_theme'
-  $logger = \Drupal::logger('my_theme');
+use Drupal\views\ViewExecutable;
 
-  // 2. Récupération des clients avec gestion d'erreur
-  try {
+/**
+ * Implémentation de hook_preprocess_views_view().
+ */
+function my_theme_preprocess_views_view(array &$variables) {
+  $view = $variables['view'];
+
+  if ($view->id() == 'pricing_plans') {
+    // Charger les clients publiés
     $node_storage = \Drupal::entityTypeManager()->getStorage('node');
     $query = $node_storage->getQuery()
-      ->condition('type', 'client') // Assure-toi que 'client' est le type de contenu
-      ->condition('status', 1)      // Seulement les nœuds publiés
+      ->condition('type', 'client')
+      ->condition('status', 1)
       ->accessCheck(TRUE);
-
     $client_ids = $query->execute();
 
     if (!empty($client_ids)) {
-      $variables['clients'] = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($client_ids);
-      $logger->info('Clients chargés: ' . count($client_ids) . ' trouvés');
+      $variables['clients'] = $node_storage->loadMultiple($client_ids);
     } else {
       $variables['clients'] = [];
-      $logger->warning('Aucun client trouvé');
     }
-  } catch (\Exception $e) {
-    $variables['clients'] = [];
-    $logger->error('Erreur de chargement: ' . $e->getMessage());
-    \Drupal::messenger()->addError('Erreur de chargement des clients');
   }
 }
+
+
 
 
