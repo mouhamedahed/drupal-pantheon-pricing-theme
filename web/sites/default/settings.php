@@ -33,7 +33,7 @@ $local_settings = __DIR__ . "/settings.local.php";
 if (file_exists($local_settings)) {
   include $local_settings;
 }
-$databases['default']['default'] = [
+/*$databases['default']['default'] = [
   'database' => 'pricing',
   'username' => 'root',
   'password' => '',
@@ -44,5 +44,5 @@ $databases['default']['default'] = [
   'driver' => 'mysql',
   'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
   'autoload' => 'core/modules/mysql\\src\\Driver\\Database\\mysql\\',
-];
+];*/
 $settings['hash_salt'] = 'Entr0AbxQO5KMJKUB1rTkAyOY1ax6ytDQwR1oh596bq9_wSIzkdeIVpRKb8FJ-rQILdWwnMzXQ';
