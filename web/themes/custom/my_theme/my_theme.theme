@@ -36,6 +36,13 @@ function my_theme_preprocess_views_view(array &$variables) {
       ->accessCheck(TRUE);
     $faq_ids = $faq_query->execute();
     $variables['faqs'] = !empty($faq_ids) ? $node_storage->loadMultiple($faq_ids) : [];
+
+    $webform = \Drupal\webform\Entity\Webform::load('inscription_a_la_newslette');
+    if ($webform) {
+      $variables['webform_rendered'] = \Drupal::entityTypeManager()
+        ->getViewBuilder('webform')
+        ->view($webform);
+    }
   }
 }
 

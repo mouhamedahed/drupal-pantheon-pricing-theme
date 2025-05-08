@@ -486,3 +486,9 @@ th {
 .faq-answer.active {
   display: block;
 }
+.newsletter-footer {
+  background: #f8f8f8;
+  padding: 20px;
+  text-align: center;
+}
+
