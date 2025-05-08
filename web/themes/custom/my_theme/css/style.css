@@ -376,3 +376,18 @@ th {
   color: #666;
   margin-top: 0.5rem;
 }
+
+.clients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  align-items: center;
+}
+.clients-grid img {
+  max-height: 80px;
+  filter: grayscale(100%);
+  transition: all 0.3s;
+}
+.clients-grid img:hover {
+  filter: grayscale(0);
+}

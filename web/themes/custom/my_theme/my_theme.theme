@@ -1,4 +1,5 @@
 <?php
+use Drupal\Core\Messenger\MessengerInterface;
 
 function my_theme_preprocess_node(&$variables) {
   if ($variables['node']->getType() == 'plan') {
@@ -9,3 +10,39 @@ function my_theme_preprocess_node(&$variables) {
     $variables['feature_groups'] = $terms;
   }
 }
+
+/**
+ * Implémentation de hook_theme_suggestions_HOOK_alter() pour ajouter des variables à Twig.
+ */
+/**
+ * Implémentation du hook_theme().
+ */
+function my_theme_preprocess_page(array &$variables) {
+  // 1. Initialisation du logger avec le canal 'my_theme'
+  $logger = \Drupal::logger('my_theme');
+
+  // 2. Récupération des clients avec gestion d'erreur
+  try {
+    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+    $query = $node_storage->getQuery()
+      ->condition('type', 'client') // Assure-toi que 'client' est le type de contenu
+      ->condition('status', 1)      // Seulement les nœuds publiés
+      ->accessCheck(TRUE);
+
+    $client_ids = $query->execute();
+
+    if (!empty($client_ids)) {
+      $variables['clients'] = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($client_ids);
+      $logger->info('Clients chargés: ' . count($client_ids) . ' trouvés');
+    } else {
+      $variables['clients'] = [];
+      $logger->warning('Aucun client trouvé');
+    }
+  } catch (\Exception $e) {
+    $variables['clients'] = [];
+    $logger->error('Erreur de chargement: ' . $e->getMessage());
+    \Drupal::messenger()->addError('Erreur de chargement des clients');
+  }
+}
+
+

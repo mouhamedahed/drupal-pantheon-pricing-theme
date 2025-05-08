@@ -5,3 +5,7 @@ core_version_requirement: ^10
 base theme: creative_innovative
 libraries:
   - my_theme/global-styling
+regions:
+  header: 'Header'
+  primary_menu: 'Primary menu'
+  footer: 'Footer'

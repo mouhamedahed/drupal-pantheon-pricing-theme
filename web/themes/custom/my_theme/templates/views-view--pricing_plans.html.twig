@@ -227,20 +227,33 @@
             </table>
         </div>
     </div>
+    {# Clients Section#}
+    {# Méthode recommandée avec Twig Tweak #}
+    <p> Variable clients : {{ clients is defined ? 'OK' : 'NON DÉFINIE' }}</p>
 
-    {# Clients Section
-    <div class="clients-section">
-        <h2>Ils nous font confiance</h2>
-        <div class="clients-grid">
-            {% for client in drupal_view('clients', 'block_1') %}
-                <a href="{{ client.url }}" target="_blank" rel="noopener noreferrer">
-                    <img src="{{ file_url(client.logo.uri) }}"
-                         alt="{{ client.name }}"
-                         loading="lazy">
-                </a>
-            {% endfor %}
+    {% if clients is not empty %}
+        <div class="clients-section">
+            <h2>Ils nous font confiance</h2>
+            <div class="clients-grid">
+                {% for client in clients %}
+                    <div class="client-item">
+                        <h3>{{ client.title.value }}</h3>
+                        {% if client.field_logo %}
+                            <img src="{{ file_url(client.field_logo.0.entity.uri.value) }}"
+                                 alt="{{ client.field_logo.0.alt }}"
+                                 loading="lazy">
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-    </div> #}
+    {% else %}
+        <div class="no-clients">
+            <p>Aucun client à afficher actuellement</p>
+        </div>
+    {% endif %}
+
+
 
     {# FAQ Section
     <div class="faq-section">

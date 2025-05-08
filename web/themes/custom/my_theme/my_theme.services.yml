@@ -1,0 +1,4 @@
+services:
+  logger.channel.my_theme:
+    parent: logger.channel_base
+    arguments: ['my_theme']
